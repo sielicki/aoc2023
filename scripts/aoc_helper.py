@@ -42,7 +42,10 @@ def grab_input(day: int, cookie_path: pathlib.Path = DEFAULT_COOKIE_PATH, output
         with get_session(cookie_path) as session:
             response = session.get(f"https://adventofcode.com/2023/day/{day}/input")
             f.write(response.text)
-            typer.echo(f"Successfully wrote {output_file_path}, good luck!")
+            if "Please don't repeatedly request this" not in response.text:
+                typer.echo(f"Successfully wrote {output_file_path}, good luck!")
+            else:
+                typer.echo("Not yet available! :(")
 
 if __name__ == '__main__':
     app()
